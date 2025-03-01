@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 15 Stocks</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold text-center mb-6">📈 Top 15 Stocks Today</h1>
+        
+        <table class="w-full border-collapse border border-gray-700 text-center">
+            <thead>
+                <tr class="bg-gray-800">
+                    <th class="border border-gray-700 p-2">Symbol</th>
+                    <th class="border border-gray-700 p-2">Name</th>
+                    <th class="border border-gray-700 p-2">Price</th>
+                    <th class="border border-gray-700 p-2">Change %</th>
+                    <th class="border border-gray-700 p-2">AI Insights</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% stocks.forEach((stock, index) => { %>
+                    <tr class="bg-gray-800 hover:bg-gray-700">
+                        <td class="border border-gray-700 p-2"><%= stock.symbol %></td>
+                        <td class="border border-gray-700 p-2"><%= stock.name %></td>
+                        <td class="border border-gray-700 p-2">$<%= stock.price %></td>
+                        <td class="border border-gray-700 p-2" style="color: <%= stock.changePercentage > 0 ? 'green' : 'red' %>">
+                            <%= stock.changePercentage %>%
+                        </td>
+                        <td class="border border-gray-700 p-2 text-sm"><%= insights[index] %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

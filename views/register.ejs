@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Registration</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neonGreen: '#00ff00',
+                        darkBg: '#121212'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Background */
+        body {
+            background: url('https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?q=80&w=2073&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="backdrop-blur-md bg-black/70 p-10 rounded-xl shadow-2xl w-full max-w-lg border border-white/20">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-300">Register</h1>
+        
+        <form action="/register" method="POST" class="space-y-6">
+            <!-- Username Input -->
+            <div class="relative">
+                <input type="text" name="username" id="username" required 
+                    class="w-full px-5 py-3 border rounded-lg bg-white/20 text-white placeholder-white/50 shadow-md focus:outline-none focus:ring-2 focus:ring-neonGreen focus:border-black text-lg"
+                    placeholder="Username">
+            </div>
+
+            <!-- Email Input -->
+            <div class="relative">
+                <input type="email" name="email" id="email" required 
+                    class="w-full px-5 py-3 border rounded-lg bg-white/20 text-white placeholder-white/50 shadow-md focus:outline-none focus:ring-2 focus:ring-neonGreen focus:border-neonGreen text-lg"
+                    placeholder="Email">
+            </div>
+
+            <!-- Password Input & Toggle -->
+            <div class="relative">
+                <input type="password" name="password" id="password" required 
+                    class="w-full px-5 py-3 border rounded-lg bg-white/20 text-white placeholder-white/50 shadow-md focus:outline-none focus:ring-2 focus:ring-neonGreen focus:border-neonGreen text-lg"
+                    placeholder="Password">
+                <button type="button" onclick="togglePassword()" class="absolute right-3 top-3 text-white text-sm">
+                    👁️ Show
+                </button>
+            </div>
+
+            <!-- Password Strength Meter -->
+            <div class="relative">
+                <progress id="strengthMeter" value="0" max="100" class="w-full h-2 bg-gray-700 rounded-lg"></progress>
+                <p id="strengthText" class="text-white text-sm mt-1"></p>
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div class="relative">
+                <input type="password" name="confirm-password" id="confirm-password" required 
+                    class="w-full px-5 py-3 border rounded-lg bg-white/20 text-white placeholder-white/50 shadow-md focus:outline-none focus:ring-2 focus:ring-neonGreen focus:border-neonGreen text-lg"
+                    placeholder="Confirm Password">
+            </div>
+
+            <!-- Register Button -->
+            <button type="submit"
+                class="w-full bg-gray-800 text-white text-lg font-bold py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-neonGreen focus:ring-offset-2 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                Register
+            </button>
+        </form>
+
+        <!-- Login Link -->
+        <p class="mt-6 text-center text-white text-lg">
+            Already have an account? 
+            <a href="/login" class="text-blue-400 font-bold hover:underline">Login here</a>
+        </p>
+    </div>
+
+    <!-- JavaScript for Features -->
+    <script>
+        function togglePassword() {
+            let passwordField = document.getElementById('password');
+            let toggleButton = event.target;
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleButton.textContent = "🙈 Hide";
+            } else {
+                passwordField.type = "password";
+                toggleButton.textContent = "👁️ Show";
+            }
+        }
+
+        document.getElementById('password').addEventListener('input', function () {
+            let strengthMeter = document.getElementById('strengthMeter');
+            let strengthText = document.getElementById('strengthText');
+            let password = this.value;
+
+            let strength = 0;
+            if (password.match(/[a-z]+/)) strength += 20;
+            if (password.match(/[A-Z]+/)) strength += 20;
+            if (password.match(/[0-9]+/)) strength += 20;
+            if (password.match(/[$@#&!]+/)) strength += 20;
+            if (password.length >= 8) strength += 20;
+
+            strengthMeter.value = strength;
+
+            if (strength < 40) {
+                strengthText.textContent = "Weak 😢";
+                strengthText.style.color = "red";
+            } else if (strength < 80) {
+                strengthText.textContent = "Medium 🙂";
+                strengthText.style.color = "yellow";
+            } else {
+                strengthText.textContent = "Strong 💪";
+                strengthText.style.color = "limegreen";
+            }
+        });
+    </script>
+
+</body>
+</html>

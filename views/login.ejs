@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Login</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        glassBg: 'rgba(255, 255, 255, 0.15)',
+                        glassBorder: 'rgba(255, 255, 255, 0.3)',
+                        neonGreen: '#00ff00',
+                        stockRed: '#ff4c4c'
+                    },
+                    backdropBlur: {
+                        xs: '4px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Background Image & Dark Overlay */
+        body {
+            background: url('https://www.techopedia.com/wp-content/uploads/2024/08/%D0%A13.ai-Stock-Price-Prediction.jpg.webp') no-repeat center center/cover !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Stock Market Animation (Fake Ticker) */
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker {
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .ticker span {
+            display: inline-block;
+            padding: 10px;
+            font-weight: bold;
+            color: white;
+            animation: ticker 10s linear infinite;
+        }
+
+        /* Floating Label */
+        .floating-label {
+            transition: all 0.3s ease-in-out;
+        }
+        .input:focus ~ .floating-label,
+        .input:not(:placeholder-shown) ~ .floating-label {
+            top: -12px;
+            left: 10px;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        /* Button Glow Effect */
+        .btn-glow {
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+        .btn-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 15px rgba(0, 255, 0, 0.8);
+        }
+
+        /* Prevent Input Background Change */
+        .input {
+            background: transparent !important;
+            color: white;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+    <!-- Stock Market Navbar -->
+    <nav class="w-full bg-black py-3 flex items-center justify-between px-8">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/016/227/291/small/bull-with-chart-bar-logo-design-finance-logo-design-free-vector.jpg" alt="Stock Market Logo" class="h-12">
+        <div class="ticker">
+            <span>📈 AAPL: $192.34 ▲ +1.2% &nbsp; | &nbsp; 📉 TSLA: $236.75 ▼ -2.5% &nbsp; | &nbsp; 📈 MSFT: $342.89 ▲ +0.8% &nbsp; | &nbsp; 📉 AMZN: $130.44 ▼ -1.1%</span>
+        </div>
+    </nav>
+
+    <div class="glass p-12 rounded-xl shadow-2xl w-full max-w-md text-white mt-10">
+        <h1 class="text-4xl font-extrabold mb-8 text-center text-neonGreen">Stock Market Login</h1>
+        
+        <form action="/login" method="POST" class="space-y-8">
+            <!-- Username Input with Floating Label -->
+            <div class="relative">
+                <i class="fas fa-user absolute left-4 top-4 text-gray-300"></i>
+                <input 
+                    type="text" 
+                    name="username" 
+                    id="username"
+                    placeholder=" "
+                    required 
+                    class="input w-full px-5 py-4 pl-12 border rounded-xl bg-transparent text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-neonGreen focus:border-neonGreen text-lg"
+                >
+                <label for="username" class="floating-label absolute left-12 top-4 text-lg text-gray-300">Username</label>
+            </div>
+
+            <!-- Password Input & Forgot Password Link -->
+            <div class="relative">
+                <i class="fas fa-lock absolute left-4 top-4 text-gray-300"></i>
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="password" 
+                    placeholder=" "
+                    required 
+                    class="input w-full px-5 py-4 pl-12 border rounded-xl bg-transparent text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-neonGreen focus:border-neonGreen text-lg"
+                >
+                <label for="password" class="floating-label absolute left-12 top-4 text-lg text-gray-300">Password</label>
+                <a href="/forgot-password" class="absolute right-4 top-4 text-lg text-blue-300 hover:underline">Forgot?</a>
+            </div>
+
+            <!-- Login Button -->
+            <button 
+                type="submit"
+                class="btn-glow w-full text-white py-4 px-5 rounded-xl text-xl font-bold transition duration-300 focus:outline-none focus:ring-2 focus:ring-neonGreen focus:ring-offset-2"
+            >
+                Login
+            </button>
+        </form>
+
+        <!-- Register Link -->
+        <p class="mt-8 text-center text-xl text-white">
+            Don't have an account? 
+            <a href="/register" class="text-blue-300 font-semibold hover:underline">Register here</a>
+        </p>
+    </div>
+
+    <script>
+        // Ensure Background Never Changes
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.style.background = "url('https://www.techopedia.com/wp-content/uploads/2024/08/%D0%A13.ai-Stock-Price-Prediction.jpg.webp') no-repeat center center/cover !important";
+        });
+    </script>
+
+</body>
+</html>
